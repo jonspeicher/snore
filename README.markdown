@@ -29,6 +29,11 @@ TBD: Features, descriptions, etc.
 
 TBD: running (nosetests --with-snore), changing pngs?
 
+Tests
+-----
+
+TBD: talk about running tests in the source repo, weird restrictions
+
 Author
 ------
 

@@ -1,21 +1,18 @@
-# snore
-# Copyright (c) 2010 Jonathan Speicher
-# jon.speicher@gmail.com
+"""This module contains the SnorePlugin class, which defines a Snarl plugin for the nose test 
+runner.  It will provide notification of test events via the Snarl system notification agent when 
+nose is run."""
+
+# Copyright (c) 2010 Jonathan Speicher (jon.speicher@gmail.com)
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
 import datetime
 import snarler
 from nose.plugins import Plugin
 
-"""This module contains the SnorePlugin class, which defines a Snarl plugin for the nose test 
-runner.  It will provide notification of test events via the Snarl system notification agent when 
-nose is run."""
-
 # Many convenient things happen if your plugin class defines a docstring and calls the superclass in
 # a few required methods.  See the nose documentation.
 
-class SnorePlugin(Plugin):
-    
+class SnorePlugin(Plugin):    
     """Enable Snarl notifications"""
     
     enabled = False
