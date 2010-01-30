@@ -11,4 +11,9 @@ events via the Snarl system notification agent when nose is run.
 """
 
 class SnorePlugin(Plugin):
-    pass
+    
+    def options(self, parser, env):
+        super(SnorePlugin, self).options(parser, env)
+        
+    def configure(self, options, conf):
+        super(SnorePlugin, self).configure(options, conf)
