@@ -12,5 +12,5 @@ class Snarler(object):
     def __init__(self):
         self._logger = logging.getLogger("nose.plugins.snore")
         
-    def snarl(self, string):
-        self._logger.debug(string)
+    def snarl(self, message):
+        self._logger.debug(message)
