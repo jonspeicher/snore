@@ -1,3 +1,7 @@
+# Ignore compiled Python bytecode.
+
+*.pyc
+
 # For Python code that is distributed with setuptools, ignore intermediate build and distribution
 # directories.
 
@@ -5,6 +9,6 @@ build
 dist
 *.egg-info
 
-# For all Python code, ignore bytecode.
+# For projects where I use TextMate, ignore the TextMate project file.
 
-*.pyc
+*.tmproj
