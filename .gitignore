@@ -1,0 +1,6 @@
+# For Python code that is distributed with setuptools, ignore intermediate build and distribution
+# directories.
+
+build
+dist
+*.egg-info
