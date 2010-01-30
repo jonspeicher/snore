@@ -3,9 +3,7 @@
 # jon.speicher@gmail.com
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
-"""
-This script installs snore as a nose plugin.
-"""
+"""This script installs snore as a nose plugin."""
 
 try:
     import ez_setup
