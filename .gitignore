@@ -4,3 +4,7 @@
 build
 dist
 *.egg-info
+
+# For all Python code, ignore bytecode.
+
+*.pyc
