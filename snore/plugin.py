@@ -4,7 +4,7 @@
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
 import datetime
-import logging
+import snarler
 from nose.plugins import Plugin
 
 """This module contains the SnorePlugin class, which defines a Snarl plugin for the nose test 
@@ -22,9 +22,9 @@ class SnorePlugin(Plugin):
     name = "snore"
     score = 1
     
-    def __init__(self):
+    def __init__(self, snarler = snarler.Snarler()):
         super(SnorePlugin, self).__init__()
-        self._logger = logging.getLogger("nose.plugins." + self.name)
+        self._snarler = snarler
     
     def options(self, parser, env):
         super(SnorePlugin, self).options(parser, env)
@@ -34,4 +34,4 @@ class SnorePlugin(Plugin):
         
     def begin(self):
         self._start_time = datetime.datetime.now()
-        self._logger.debug('start time = ' + str(self._start_time))
+        self._snarler.snarl('start time = ' + str(self._start_time))
