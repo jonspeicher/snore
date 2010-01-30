@@ -6,13 +6,13 @@ nose is run."""
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
 import datetime
+import nose.plugins
 import snarler
-from nose.plugins import Plugin
 
 # Many convenient things happen if your plugin class defines a docstring and calls the superclass in
 # a few required methods.  See the nose documentation.
 
-class SnorePlugin(Plugin):    
+class SnorePlugin(nose.plugins.Plugin):    
     """Enable Snarl notifications"""
     
     enabled = False
