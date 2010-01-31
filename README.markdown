@@ -6,21 +6,22 @@ snore is a Snarl plugin for nose.
 Description
 -----------
 
-Writing Python?  Stuck with Windows?  Get your TDD on with snore.  snore plugs in to the nose test runner and uses the [Growl](http://growl.info) clone Snarl to provide immediate feedback for your test results.  It is most fun and effective with a continuous test runner like [autonose](http://github.com/gfxmonk/autonose).
+Writing Python?  Stuck with Windows?  Get your TDD on with snore.  snore plugs in to the nose test runner and uses the [Growl](http://growl.info) clone Snarl to provide immediate feedback for your test results.  The snore plugin is most fun and effective with a continuous test runner like [autonose](http://github.com/gfxmonk/autonose).
 
 Requirements
 ------------
 
+* setuptools (http://pypi.python.org/pypi/setuptools)
 * Snarl (http://www.fullphat.net)
 * PySnarl (http://code.google.com/p/pysnarl)
 * nose (http://somethingaboutorange.com/mrl/projects/nose)
 
-I've tested snore with Python 2.5, Snarl 2.21, PySnarl 1.0.2, and nose 0.11.1 on Windows XP Professional SP2 and on **nothing else**.  snore was largely developed (and its tests do run) with Python 2.6 on Mac OS X 10.6.2 (Snow Leopard), however.
+I've tested snore with Python 2.5, Snarl 2.21, PySnarl 1.0.2, and nose 0.11.1 on Windows XP Professional SP2 and on **nothing else**.  snore was largely developed using Python 2.6 on Mac OS X 10.6.2 (Snow Leopard), however.
 
 Installation
 ------------
 
-First, install the required dependencies.  Snarl must be installed according to its instructions.  nose can be retrieved and installed with `easy_install nose`.  To install PySnarl, download and unzip the source and run `setup.py install` from the unzipped source's root directory.
+First, install the required dependencies.  Snarl must be installed according to the instructions found at its website.  Once setuptools is installed, nose can be retrieved and installed by running `easy_install nose` at a shell prompt.  To install PySnarl, download and unzip the source and run `setup.py install` from the unzipped source's root directory.
 
 TBD: installing snore (python setup.py install --root=test, python setup.py install?  Or if it winds up on the PyPI, make that into build instructions?)
 
@@ -32,12 +33,21 @@ TBD: running (nosetests --with-snore), changing pngs?
 Tests
 -----
 
-TBD: talk about running tests in the source repo, weird restrictions
+Unit tests are provided with the source distribution in the `test` directory.  These tests are intended to be run with `nosetests`, but they don't work with `nosetests` when the snore egg is installed in `site-packages`.  There is currently no way to run the tests directly from the command line by executing the test scripts.
+
+Uninstallation
+--------------
+
+Should you wish to remove snore, simply:
+
+* Change to your Python installation's `site-packages` directory
+* Remove `snore-X.X-pyZ.Z.egg` from that directory
+* Remove the line referring to snore from the `easy-install.pth` file found in that directory
 
 Author
 ------
 
-Jon Speicher (jon.speicher@gmail.com)
+Jon Speicher ([jon.speicher@gmail.com](mailto:jon.speicher@gmail.com))
 
 Credits
 -------
