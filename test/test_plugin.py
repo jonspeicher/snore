@@ -26,3 +26,15 @@ class TestSnorePlugin(unittest.TestCase):
     def testBeginIsQuiet(self):
         self._plugin.begin()
         self.assertEqual('', self._snarler.last_message)
+    
+    # testGreenTitleContainsNumberOfTestsPassed
+    # testGreenTitleContainsTotalTestCount
+    # testGreenBodyContainsTestRunTime
+    # testRedTitleContainsNumberOfTestsFailed
+    # testRedTitleContainsTotalTestCount
+    # testRedBodyContainsTestRunTime
+    # testErrorTitleContainsNumberOfTestsWithErrors
+    # testErrorTitleContainsTotalTestCount
+    # testErrorBodyContainsTestRunTime
+    
+    # TBD: Add to body first error or first failure text?
