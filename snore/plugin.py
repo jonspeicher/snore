@@ -31,4 +31,3 @@ class SnorePlugin(nose.plugins.Plugin):
         
     def begin(self):
         self._start_time = datetime.datetime.now()
-        self._snarler.snarl('start time = ' + str(self._start_time))

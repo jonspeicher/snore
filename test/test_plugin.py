@@ -12,14 +12,17 @@ import sys
 import unittest
 
 class TestSnarler(object):
+    def __init__(self):
+        self.last_message = ''
+
     def snarl(self, message):
-        self.lastMessage = message
+        self.last_message = message
     
 class TestSnorePlugin(unittest.TestCase):
     def setUp(self):
         self._snarler = TestSnarler()
         self._plugin = snore.plugin.SnorePlugin(self._snarler)
         
-    def testBeginAnnouncesTestStartTime(self):
+    def testBeginIsQuiet(self):
         self._plugin.begin()
-        self.assertTrue(self._snarler.lastMessage.startswith("start time = "))
+        self.assertEqual('', self._snarler.last_message)
