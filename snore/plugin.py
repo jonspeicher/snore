@@ -30,4 +30,7 @@ class SnorePlugin(nose.plugins.Plugin):
         super(SnorePlugin, self).configure(options, conf)
         
     def begin(self):
-        self._start_time = datetime.datetime.now()
+        pass
+        
+    def finalize(self, result):
+        pass

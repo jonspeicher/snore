@@ -11,12 +11,19 @@ import snore.plugin
 import sys
 import unittest
 
+# Define a few test doubles.
+
 class TestSnarler(object):
     def __init__(self):
         self.last_message = ''
-
     def snarl(self, message):
         self.last_message = message
+        
+class TestResult(object):
+    def __init__(self):
+        self.testsRun = 0
+
+# This is the test case itself.
     
 class TestSnorePlugin(unittest.TestCase):
     def setUp(self):
@@ -24,10 +31,17 @@ class TestSnorePlugin(unittest.TestCase):
         self._plugin = snore.plugin.SnorePlugin(self._snarler)
         
     def testBeginIsQuiet(self):
+        self._snarler.last_message = ''
         self._plugin.begin()
         self.assertEqual('', self._snarler.last_message)
     
-    # testGreenTitleContainsNumberOfTestsPassed
+    def testGreenTitleContainsNumberOfTestsPassed(self):
+        pass
+        #result = TestResult()
+        #result.testsRun = 5
+        #self._plugin.finalize(TestResult())
+        #self.assertTrue(self._plugin.last_title.endswith('of 5 passed')
+        
     # testGreenTitleContainsTotalTestCount
     # testGreenBodyContainsTestRunTime
     # testRedTitleContainsNumberOfTestsFailed
