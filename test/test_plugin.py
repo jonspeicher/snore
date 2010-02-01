@@ -21,9 +21,10 @@ class TestSnarler(object):
         self.last_body = body
         
 class TestResult(object):
-    def __init__(self, num_tests_passed, num_tests_run):
+    def __init__(self, num_tests_passed, num_tests_run, num_errors = 0):
         self._num_tests_passed = num_tests_passed
         self.testsRun = num_tests_run
+        self.errors = num_errors * [None]
     def wasSuccessful(self):
         return self.testsRun == self._num_tests_passed
 
@@ -65,9 +66,18 @@ class TestSnorePlugin(unittest.TestCase):
         self._plugin.finalize(TestResult(3, 5))
         self.assertTrue(regex.search(self._snarler.last_body))
         
-    # testErrorTitleContainsNumberOfTestsWithErrors
-    # testErrorTitleContainsTotalTestCount
-    # testErrorBodyContainsTestRunTime
+    def testErrorTitleIsSomeUnitTestsHadErrors(self):
+        self._plugin.finalize(TestResult(3, 5, 2))
+        self.assertEqual('Some unit tests had errors.', self._snarler.last_title)
+        
+    def testErrorBodyStartsWithNumberOfErrors(self):
+        self._plugin.finalize(TestResult(3, 5, 2))
+        self.assertTrue(self._snarler.last_body.startswith('2 errors'))
+        
+    def testErrorBodyEndsWithTestRunTime(self):
+        regex = re.compile(' in \d+\.?\d* seconds.$')
+        self._plugin.finalize(TestResult(3, 5, 2))
+        self.assertTrue(regex.search(self._snarler.last_body))
     
-    # TBD: Add to body first error or first failure text?
+    # TBD: Add to body first error or first failure text, or name of first failing test case?
     # TBD: Test that time computation is accurate with injected "clock"?
