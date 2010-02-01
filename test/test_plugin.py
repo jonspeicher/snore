@@ -56,9 +56,12 @@ class TestSnorePlugin(unittest.TestCase):
         self._plugin.finalize(TestResult(3, 5))
         self.assertEqual('Some unit tests failed.', self._snarler.last_title)
         
-    # testRedBodyContainsNumberOfTestsFailed
+    def testRedBodyStartsWithNumberOfTestsFailed(self):
+        self._plugin.finalize(TestResult(3, 5))
+        self.assertTrue(self._snarler.last_body.startswith('3'))
+        
     # testRedBodyContainsTotalTestCount
-    # testRedBodyContainsTestRunTime
+    # testRedBodyEndsWithTestRunTime
     # testErrorTitleContainsNumberOfTestsWithErrors
     # testErrorTitleContainsTotalTestCount
     # testErrorBodyContainsTestRunTime
