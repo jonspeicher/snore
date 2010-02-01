@@ -1,13 +1,10 @@
 """This module contains the SnorePlugin class, which defines a Snarl plugin for the nose test 
-runner.  It will provide notification of test events via the Snarl system notification agent when 
-nose is run."""
+runner.  It provides notification of test status and results using Snarl when nose is run."""
 
 # Copyright (c) 2010 Jonathan Speicher (jon.speicher@gmail.com)
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
-import datetime
 import nose.plugins
-import snarler
 
 # Many convenient things happen if your plugin class defines a docstring and calls the superclass in
 # a few required methods.  See the nose documentation.
@@ -19,7 +16,7 @@ class SnorePlugin(nose.plugins.Plugin):
     name = "snore"
     score = 1
     
-    def __init__(self, snarler = snarler.Snarler()):
+    def __init__(self, snarler):
         super(SnorePlugin, self).__init__()
         self._snarler = snarler
     
