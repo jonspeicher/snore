@@ -1,4 +1,4 @@
-"""This module contains tests for the SnorePlugin class."""
+"""This module contains unit tests for the SnorePlugin class."""
 
 # Copyright (c) 2010 Jonathan Speicher (jon.speicher@gmail.com)
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
@@ -8,7 +8,6 @@
 # from the command line by executing the test scripts.
 
 import snore.plugin
-import sys
 import unittest
 
 # Define a few test doubles.

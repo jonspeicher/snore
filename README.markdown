@@ -16,7 +16,7 @@ Requirements
 * PySnarl (http://code.google.com/p/pysnarl)
 * nose (http://somethingaboutorange.com/mrl/projects/nose)
 
-I've tested snore with Python 2.5, Snarl 2.21, PySnarl 1.0.2, and nose 0.11.1 on Windows XP Professional SP2 and on **nothing else**.  snore was largely developed using Python 2.6 on Mac OS X 10.6.2 (Snow Leopard), however.
+I've tested snore with Python 2.5, Snarl 2.21, PySnarl 1.0.2, and nose 0.11.1 on Windows XP Professional SP2 and on **nothing else**.  snore was largely developed using Python 2.6 on Mac OS X 10.6.2 (Snow Leopard), however, and the unit tests should run on that platform as well.
 
 Installation
 ------------
