@@ -16,13 +16,13 @@ import unittest
 class TestSnarler(object):
     def __init__(self):
         self.last_title = ''
-    def snarl(self, title, body):
+    def snarl(self, title, body = ''):
         self.last_title = title
         self.last_body = body
         
 class TestResult(object):
     def __init__(self, num_tests_passed, num_tests_run):
-        self.num_tests_passed = num_tests_passed
+        self._num_tests_passed = num_tests_passed
         self.testsRun = num_tests_run
     def wasSuccessful(self):
         return self.testsRun == self._num_tests_passed
@@ -52,8 +52,12 @@ class TestSnorePlugin(unittest.TestCase):
         self._plugin.finalize(TestResult(5, 5))
         self.assertTrue(regex.search(self._snarler.last_body))
         
-    # testRedTitleContainsNumberOfTestsFailed
-    # testRedTitleContainsTotalTestCount
+    def testRedTitleIsSomeUnitTestsFailed(self):
+        self._plugin.finalize(TestResult(3, 5))
+        self.assertEqual('Some unit tests failed.', self._snarler.last_title)
+        
+    # testRedBodyContainsNumberOfTestsFailed
+    # testRedBodyContainsTotalTestCount
     # testRedBodyContainsTestRunTime
     # testErrorTitleContainsNumberOfTestsWithErrors
     # testErrorTitleContainsTotalTestCount
