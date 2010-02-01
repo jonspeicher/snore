@@ -7,6 +7,7 @@
 # the snore egg is installed in site-packages.  There is currently no way to run the tests directly
 # from the command line by executing the test scripts.
 
+import re
 import snore.plugin
 import unittest
 
@@ -40,14 +41,17 @@ class TestSnorePlugin(unittest.TestCase):
     
     def testGreenTitleIsAllUnitTestsPassed(self):
         self._plugin.finalize(TestResult(5, 5))
-        self.assertEqual("All unit tests passed.", self._snarler.last_title)
+        self.assertEqual('All unit tests passed.', self._snarler.last_title)
         
-    def testGreenBodyContainsTotalTestCount(self):
+    def testGreenBodyStartsWithTotalTestCount(self):
         self._plugin.finalize(TestResult(5, 5))
-        self.assertTrue(self._snarler.last_body.startswith("5 tests"))
+        self.assertTrue(self._snarler.last_body.startswith('5 tests run'))
         
-    # TBD: Green body contains test count
-    # testGreenBodyContainsTestRunTime
+    def testGreenBodyEndsWithTestRunTime(self):
+        regex = re.compile(' in \d+\.*\d* seconds.$')
+        self._plugin.finalize(TestResult(5, 5))
+        self.assertTrue(regex.search(self._snarler.last_body))
+        
     # testRedTitleContainsNumberOfTestsFailed
     # testRedTitleContainsTotalTestCount
     # testRedBodyContainsTestRunTime
