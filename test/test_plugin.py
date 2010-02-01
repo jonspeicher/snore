@@ -14,13 +14,15 @@ import unittest
 
 class TestSnarler(object):
     def __init__(self):
-        self.last_message = ''
-    def snarl(self, message):
-        self.last_message = message
+        self.last_title = ''
+    def snarl(self, title):
+        self.last_title = title
         
 class TestResult(object):
     def __init__(self):
-        self.testsRun = 0
+        self.successful = True
+    def wasSuccessful(self):
+        return self.successful
 
 # This is the test case itself.
     
@@ -28,20 +30,20 @@ class TestSnorePlugin(unittest.TestCase):
     def setUp(self):
         self._snarler = TestSnarler()
         self._plugin = snore.plugin.SnorePlugin(self._snarler)
+        self._results = TestResult()
         
     def testBeginIsQuiet(self):
         self._snarler.last_message = ''
         self._plugin.begin()
         self.assertEqual('', self._snarler.last_message)
     
-    def testGreenTitleContainsNumberOfTestsPassed(self):
-        pass
-        #result = TestResult()
-        #result.testsRun = 5
-        #self._plugin.finalize(TestResult())
-        #self.assertTrue(self._plugin.last_title.endswith('of 5 passed')
+    def testGreenTitleIsAllUnitTestsPassed(self):
+        self._results.successful = True
+        self._plugin.finalize(self._results)
+        self.assertEqual("All unit tests passed.", self._snarler.last_title)
         
     # testGreenTitleContainsTotalTestCount
+    # TBD: Green body contains test count
     # testGreenBodyContainsTestRunTime
     # testRedTitleContainsNumberOfTestsFailed
     # testRedTitleContainsTotalTestCount

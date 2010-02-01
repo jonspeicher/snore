@@ -30,4 +30,4 @@ class SnorePlugin(nose.plugins.Plugin):
         pass
         
     def finalize(self, result):
-        pass
+        self._snarler.snarl("All unit tests passed.")

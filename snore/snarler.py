@@ -6,6 +6,8 @@ to display status and reports via Snarl in an uncomplicated fashion."""
 
 import logging
 
+# TBD: Ensure this snarler matches the interface of the test snarler!!
+
 class Snarler(object):
     """Interface with Snarl to display status and reports"""
     
