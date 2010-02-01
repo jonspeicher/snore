@@ -48,7 +48,7 @@ class TestSnorePlugin(unittest.TestCase):
         self.assertTrue(self._snarler.last_body.startswith('5 tests run'))
         
     def testGreenBodyEndsWithTestRunTime(self):
-        regex = re.compile(' in \d+\.*\d* seconds.$')
+        regex = re.compile(' in \d+\.?\d* seconds.$')
         self._plugin.finalize(TestResult(5, 5))
         self.assertTrue(regex.search(self._snarler.last_body))
         
@@ -60,3 +60,4 @@ class TestSnorePlugin(unittest.TestCase):
     # testErrorBodyContainsTestRunTime
     
     # TBD: Add to body first error or first failure text?
+    # TBD: Test that time computation is accurate with injected "clock"?
