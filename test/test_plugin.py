@@ -60,7 +60,11 @@ class TestSnorePlugin(unittest.TestCase):
         self._plugin.finalize(TestResult(3, 5))
         self.assertTrue(self._snarler.last_body.startswith('3 of 5 tests failed'))
         
-    # testRedBodyEndsWithTestRunTime
+    def testRedBodyEndsWithTestRunTime(self):
+        regex = re.compile(' in \d+\.?\d* seconds.$')
+        self._plugin.finalize(TestResult(3, 5))
+        self.assertTrue(regex.search(self._snarler.last_body))
+        
     # testErrorTitleContainsNumberOfTestsWithErrors
     # testErrorTitleContainsTotalTestCount
     # testErrorBodyContainsTestRunTime
