@@ -58,9 +58,8 @@ class TestSnorePlugin(unittest.TestCase):
         
     def testRedBodyStartsWithNumberOfTestsFailed(self):
         self._plugin.finalize(TestResult(3, 5))
-        self.assertTrue(self._snarler.last_body.startswith('3'))
+        self.assertTrue(self._snarler.last_body.startswith('3 of 5 tests failed'))
         
-    # testRedBodyContainsTotalTestCount
     # testRedBodyEndsWithTestRunTime
     # testErrorTitleContainsNumberOfTestsWithErrors
     # testErrorTitleContainsTotalTestCount
