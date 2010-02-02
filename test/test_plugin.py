@@ -44,15 +44,15 @@ class TestSnorePlugin(unittest.TestCase):
     
     def testGreenBodyStartsWithTotalTestCountForOneTest(self):
         self._plugin.finalize(TestResult(1, 1))
-        self.assertTrue(self._snarler.last_body.startswith('1 test run'))
+        self.assertTrue(self._snarler.last_body.startswith('1 of 1 test passed'))
     
     def testGreenBodyStartsWithTotalTestCountForTwoTests(self):
         self._plugin.finalize(TestResult(2, 2))
-        self.assertTrue(self._snarler.last_body.startswith('2 tests run'))
+        self.assertTrue(self._snarler.last_body.startswith('2 of 2 tests passed'))
         
     def testGreenBodyStartsWithTotalTestCountForSeveralTests(self):
         self._plugin.finalize(TestResult(5, 5))
-        self.assertTrue(self._snarler.last_body.startswith('5 tests run'))
+        self.assertTrue(self._snarler.last_body.startswith('5 of 5 tests passed'))
         
     def testGreenBodyEndsWithTestRunTime(self):
         regex = re.compile(' in \d+\.?\d* seconds.$')
