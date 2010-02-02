@@ -12,7 +12,9 @@ class Snarler(object):
     """Interface with Snarl to display status and reports"""
     
     def __init__(self):
-        self._logger = logging.getLogger("nose.plugins.snore")
+        self._logger = logging.getLogger('nose.plugins.snore')
         
-    def snarl(self, message):
-        self._logger.debug(message)
+    def snarl(self, title, body):
+        self._logger.debug('snore ----------------------------------')
+        self._logger.debug(title)
+        self._logger.debug(body)
