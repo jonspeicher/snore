@@ -31,15 +31,14 @@ class SnorePlugin(nose.plugins.Plugin):
         
     def finalize(self, result):
         title = self._get_title_string(result)
+        count = self._make_test_count_string(result.testsRun)
         time = self._make_elapsed_time_string(5.678)
         
         if result.errors:
             count = '2 errors'
         elif result.failures:
-            count = '3 of 5 tests failed'
-        else:
-            count = self._make_test_count_string(result.testsRun)
-            
+            count = str(len(result.failures)) + ' of ' + count + ' failed'
+        
         self._snarler.snarl(title, count + time)
     
     def _get_title_string(self, result):

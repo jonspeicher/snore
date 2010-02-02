@@ -23,7 +23,7 @@ class TestSnarler(object):
 class TestResult(object):
     def __init__(self, num_tests_passed, num_tests_run, num_errors = 0):
         self.testsRun = num_tests_run
-        self.failures = num_tests_run - num_tests_passed
+        self.failures = (num_tests_run - num_tests_passed) * [None]
         self.errors = num_errors * [None]
 
 # This is the test case itself.
@@ -62,19 +62,29 @@ class TestSnorePlugin(unittest.TestCase):
     def testRedTitleIsSomeUnitTestsFailed(self):
         self._plugin.finalize(TestResult(3, 5))
         self.assertEqual('Some unit tests failed.', self._snarler.last_title)
-        
-    def testRedBodyStartsWithNumberOfTestsFailed(self):
-        self._plugin.finalize(TestResult(3, 5))
+    
+    def testRedBodyStartsWithNumberOfTestsFailedForOneTest(self):
+        self._plugin.finalize(TestResult(0, 1))
+        self.assertTrue(self._snarler.last_body.startswith('1 of 1 test failed'))
+
+    def testRedBodyStartsWithNumberOfTestsFailedForTwoTests(self):
+        self._plugin.finalize(TestResult(0, 2))
+        self.assertTrue(self._snarler.last_body.startswith('2 of 2 tests failed')) 
+          
+    def testRedBodyStartsWithNumberOfTestsFailedForSeveralTests(self):
+        self._plugin.finalize(TestResult(2, 5))
         self.assertTrue(self._snarler.last_body.startswith('3 of 5 tests failed'))
         
     def testRedBodyEndsWithTestRunTime(self):
         regex = re.compile(' in \d+\.?\d* seconds.$')
         self._plugin.finalize(TestResult(3, 5))
         self.assertTrue(regex.search(self._snarler.last_body))
-        
+    
     def testErrorTitleIsSomeUnitTestsHadErrors(self):
         self._plugin.finalize(TestResult(3, 5, 2))
         self.assertEqual('Some unit tests had errors.', self._snarler.last_title)
+    
+    # TBD: Fill this out for multiple cases
         
     def testErrorBodyStartsWithNumberOfErrors(self):
         self._plugin.finalize(TestResult(3, 5, 2))
