@@ -38,73 +38,57 @@ class TestSnorePlugin(unittest.TestCase):
         self._plugin.begin()
         self.assertEqual('', self._snarler.last_message)
     
-    def testGreenTitleIsAllUnitTestsPassed(self):
-        self._plugin.finalize(TestResult(5, 5))
-        self.assertEqual('All unit tests passed.', self._snarler.last_title)
-    
-    def testGreenBodyStartsWithTotalTestCountForOneTest(self):
+    def testGreenTitleIsNumberOfTestsPassedForOneTest(self):
         self._plugin.finalize(TestResult(1, 1))
-        self.assertTrue(self._snarler.last_body.startswith('1 of 1 test passed'))
+        self.assertEqual('1 of 1 test passed.', self._snarler.last_title)
     
-    def testGreenBodyStartsWithTotalTestCountForTwoTests(self):
+    def testGreenTitleIsNumberOfTestsPassedForTwoTests(self):
         self._plugin.finalize(TestResult(2, 2))
-        self.assertTrue(self._snarler.last_body.startswith('2 of 2 tests passed'))
+        self.assertEqual('2 of 2 tests passed.', self._snarler.last_title)
         
-    def testGreenBodyStartsWithTotalTestCountForSeveralTests(self):
+    def testGreenTitleIsNumberOfTestsPassedForSeveralTests(self):
         self._plugin.finalize(TestResult(5, 5))
-        self.assertTrue(self._snarler.last_body.startswith('5 of 5 tests passed'))
+        self.assertEqual('5 of 5 tests passed.', self._snarler.last_title)
         
-    def testGreenBodyEndsWithTestRunTime(self):
-        regex = re.compile(' in \d+\.?\d* seconds.$')
+    def testGreenBodyIsTestRunTime(self):
+        regex = re.compile('Tests completed in \d+\.?\d* seconds.$')
         self._plugin.finalize(TestResult(5, 5))
         self.assertTrue(regex.search(self._snarler.last_body))
         
-    def testRedTitleIsSomeUnitTestsFailed(self):
-        self._plugin.finalize(TestResult(3, 5))
-        self.assertEqual('Some unit tests failed.', self._snarler.last_title)
-    
-    def testRedBodyStartsWithNumberOfTestsFailedForOneTest(self):
+    def testRedTitleIsNumberOfTestsFailedForOneTest(self):
         self._plugin.finalize(TestResult(0, 1))
-        self.assertTrue(self._snarler.last_body.startswith('1 of 1 test failed'))
+        self.assertEqual('1 of 1 test failed.', self._snarler.last_title)
 
-    def testRedBodyStartsWithNumberOfTestsFailedForTwoTests(self):
+    def testRedTitleIsNumberOfTestsFailedForTwoTests(self):
         self._plugin.finalize(TestResult(0, 2))
-        self.assertTrue(self._snarler.last_body.startswith('2 of 2 tests failed')) 
+        self.assertEqual('2 of 2 tests failed.', self._snarler.last_title)
           
-    def testRedBodyStartsWithNumberOfTestsFailedForSeveralTests(self):
+    def testRedTitleIsNumberOfTestsFailedForSeveralTests(self):
         self._plugin.finalize(TestResult(2, 5))
-        self.assertTrue(self._snarler.last_body.startswith('3 of 5 tests failed'))
+        self.assertEqual('3 of 5 tests failed.', self._snarler.last_title)
         
-    def testRedBodyEndsWithTestRunTime(self):
-        regex = re.compile(' in \d+\.?\d* seconds.$')
+    def testRedBodyIsTestRunTime(self):
+        regex = re.compile('Tests completed in \d+\.?\d* seconds.$')
         self._plugin.finalize(TestResult(3, 5))
         self.assertTrue(regex.search(self._snarler.last_body))
     
-    def testErrorTitleIsSomeUnitTestsHadErrors(self):
-        self._plugin.finalize(TestResult(3, 5, 2))
-        self.assertEqual('Some unit tests had errors.', self._snarler.last_title)    
-    
-    def testErrorBodyStartsWithNumberOfErrorsForOneTest(self):
+    def testErrorTitleIsNumberOfErrorsForOneTest(self):
         self._plugin.finalize(TestResult(0, 1, 1))
-        self.assertTrue(self._snarler.last_body.startswith('1 of 1 test had errors'))
+        self.assertEqual('1 of 1 test had errors.', self._snarler.last_title)
         
-    def testErrorBodyStartsWithNumberOfErrorsForTwoTests(self):
+    def testErrorTitleIsNumberOfErrorsForTwoTests(self):
         self._plugin.finalize(TestResult(0, 2, 2))
-        self.assertTrue(self._snarler.last_body.startswith('2 of 2 tests had errors'))
+        self.assertEqual('2 of 2 tests had errors.', self._snarler.last_title)
 
-    def testErrorBodyStartsWithNumberOfErrorsForSeveralTests(self):
+    def testErrorTitleIsNumberOfErrorsForSeveralTests(self):
         self._plugin.finalize(TestResult(2, 5, 3))
-        self.assertTrue(self._snarler.last_body.startswith('3 of 5 tests had errors'))
+        self.assertEqual('3 of 5 tests had errors.', self._snarler.last_title)
                 
-    def testErrorBodyEndsWithTestRunTime(self):
-        regex = re.compile(' in \d+\.?\d* seconds.$')
+    def testErrorBodyIsTestRunTime(self):
+        regex = re.compile('Tests completed in \d+\.?\d* seconds.$')
         self._plugin.finalize(TestResult(3, 5, 2))
         self.assertTrue(regex.search(self._snarler.last_body))
     
-    # TBD: Maybe add "testOneFailed..." and "testMultipleFailed..." tests to drive correctness
     # TBD: What does it do with zero tests?
     # TBD: Test that time computation is accurate with injected "clock"?
-    # TBD: Test images passed to snarler
-    # TBD: Add to body first error or first failure text, or name of first failing test case?
-    # TBD: Also add a test case for the plugin using the framework? Ick.
-    
+    # TBD: Test images passed to snarler    

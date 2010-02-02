@@ -30,25 +30,18 @@ class SnorePlugin(nose.plugins.Plugin):
         pass
         
     def finalize(self, result):
-        title = self._get_title_string(result)
-        time = self._make_elapsed_time_string(5.678)
-        
         if result.errors:
-            count = self._make_test_count_string(str(len(result.errors)), result.testsRun, 'had errors')
+            title = self._summary(len(result.errors), result.testsRun, 'had errors.')
         elif result.failures:
-            count = self._make_test_count_string(str(len(result.failures)), result.testsRun, 'failed')
+            title = self._summary(len(result.failures), result.testsRun, 'failed.')
         else:
-            count = self._make_test_count_string(result.testsRun, result.testsRun, 'passed.')
-        
-        self._snarler.snarl(title, count + time)
-    
-    def _get_title_string(self, result):
-        if result.errors: return 'Some unit tests had errors.'
-        elif result.failures: return 'Some unit tests failed.'
-        else: return 'All unit tests passed.'
+            title = self._summary(result.testsRun, result.testsRun, 'passed.')
+        print title
+        time = self._elapsed_time(5.678)
+        self._snarler.snarl(title, time)
 
-    def _make_test_count_string(self, count, total, postfix):
+    def _summary(self, count, total, postfix):
         return str(count) + ' of ' + str(total) + (' test ' if total == 1 else ' tests ') + postfix
         
-    def _make_elapsed_time_string(self, time):
-        return ' run in ' + str(time) + ' seconds.'
+    def _elapsed_time(self, time):
+        return 'Tests completed in ' + str(time) + ' seconds.'
