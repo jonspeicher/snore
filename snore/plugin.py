@@ -36,7 +36,7 @@ class SnorePlugin(nose.plugins.Plugin):
             title = self._summary(len(result.failures), result.testsRun, 'failed.')
         else:
             title = self._summary(result.testsRun, result.testsRun, 'passed.')
-        print title
+        
         time = self._elapsed_time(5.678)
         self._snarler.snarl(title, time)
 

@@ -14,17 +14,15 @@ import unittest
 # Define a few test doubles.
 
 class TestSnarler(object):
-    def __init__(self):
-        self.last_title = ''
-    def snarl(self, title, body = ''):
+    def snarl(self, title, body):
         self.last_title = title
         self.last_body = body
         
 class TestResult(object):
-    def __init__(self, num_tests_passed, num_tests_run, num_errors = 0):
-        self.testsRun = num_tests_run
-        self.failures = (num_tests_run - num_tests_passed) * [None]
-        self.errors = num_errors * [None]
+    def __init__(self, run = 0, failed = 0, errors = 0):
+        self.testsRun = run
+        self.failures = failed * [None]
+        self.errors = errors * [None]
 
 # This is the test case itself.
     
@@ -39,56 +37,62 @@ class TestSnorePlugin(unittest.TestCase):
         self.assertEqual('', self._snarler.last_message)
     
     def testGreenTitleIsNumberOfTestsPassedForOneTest(self):
-        self._plugin.finalize(TestResult(1, 1))
+        self._plugin.finalize(TestResult(run = 1, failed = 0, errors = 0))
         self.assertEqual('1 of 1 test passed.', self._snarler.last_title)
     
     def testGreenTitleIsNumberOfTestsPassedForTwoTests(self):
-        self._plugin.finalize(TestResult(2, 2))
+        self._plugin.finalize(TestResult(run = 2, failed = 0, errors = 0))
         self.assertEqual('2 of 2 tests passed.', self._snarler.last_title)
         
     def testGreenTitleIsNumberOfTestsPassedForSeveralTests(self):
-        self._plugin.finalize(TestResult(5, 5))
+        self._plugin.finalize(TestResult(run = 5, failed = 0, errors = 0))
         self.assertEqual('5 of 5 tests passed.', self._snarler.last_title)
         
     def testGreenBodyIsTestRunTime(self):
         regex = re.compile('Tests completed in \d+\.?\d* seconds.$')
-        self._plugin.finalize(TestResult(5, 5))
+        self._plugin.finalize(TestResult(run = 5, failed = 0, errors = 0))
         self.assertTrue(regex.search(self._snarler.last_body))
         
     def testRedTitleIsNumberOfTestsFailedForOneTest(self):
-        self._plugin.finalize(TestResult(0, 1))
+        self._plugin.finalize(TestResult(run = 1, failed = 1, errors = 0))
         self.assertEqual('1 of 1 test failed.', self._snarler.last_title)
 
     def testRedTitleIsNumberOfTestsFailedForTwoTests(self):
-        self._plugin.finalize(TestResult(0, 2))
+        self._plugin.finalize(TestResult(run = 2, failed = 2, errors = 0))
         self.assertEqual('2 of 2 tests failed.', self._snarler.last_title)
           
     def testRedTitleIsNumberOfTestsFailedForSeveralTests(self):
-        self._plugin.finalize(TestResult(2, 5))
+        self._plugin.finalize(TestResult(run = 5, failed = 3, errors = 0))
         self.assertEqual('3 of 5 tests failed.', self._snarler.last_title)
         
     def testRedBodyIsTestRunTime(self):
         regex = re.compile('Tests completed in \d+\.?\d* seconds.$')
-        self._plugin.finalize(TestResult(3, 5))
+        self._plugin.finalize(TestResult(run = 5, failed = 3, errors = 0))
         self.assertTrue(regex.search(self._snarler.last_body))
     
     def testErrorTitleIsNumberOfErrorsForOneTest(self):
-        self._plugin.finalize(TestResult(0, 1, 1))
+        self._plugin.finalize(TestResult(run = 1, failed = 0, errors = 1))
         self.assertEqual('1 of 1 test had errors.', self._snarler.last_title)
         
     def testErrorTitleIsNumberOfErrorsForTwoTests(self):
-        self._plugin.finalize(TestResult(0, 2, 2))
+        self._plugin.finalize(TestResult(run = 2, failed = 0, errors = 2))
         self.assertEqual('2 of 2 tests had errors.', self._snarler.last_title)
 
     def testErrorTitleIsNumberOfErrorsForSeveralTests(self):
-        self._plugin.finalize(TestResult(2, 5, 3))
+        self._plugin.finalize(TestResult(run = 5, failed = 0, errors = 3))
         self.assertEqual('3 of 5 tests had errors.', self._snarler.last_title)
                 
     def testErrorBodyIsTestRunTime(self):
         regex = re.compile('Tests completed in \d+\.?\d* seconds.$')
-        self._plugin.finalize(TestResult(3, 5, 2))
+        self._plugin.finalize(TestResult(run = 5, failed = 0, errors = 3))
         self.assertTrue(regex.search(self._snarler.last_body))
+        
+    def testErrorsHavePrecedenceOverFailures(self):
+        self._plugin.finalize(TestResult(run = 5, failed = 1, errors = 1))
+        self.assertEqual('1 of 5 tests had errors.', self._snarler.last_title)
     
-    # TBD: What does it do with zero tests?
-    # TBD: Test that time computation is accurate with injected "clock"?
+    def testTimeElapsedComputationIsCorrect(self):
+        # TBD: Test that time computation is accurate with injected "clock"?
+        pass
+        
     # TBD: Test images passed to snarler    
