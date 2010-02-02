@@ -7,6 +7,7 @@
 # the snore egg is installed in site-packages.  There is currently no way to run the tests directly
 # from the command line by executing the test scripts.
 
+import datetime
 import re
 import snore.plugin
 import unittest
@@ -17,6 +18,14 @@ class TestSnarler(object):
     def snarl(self, title, body):
         self.last_title = title
         self.last_body = body
+        
+class TestClock(object):
+    def __init__(self, interval_us):
+        self._now = datetime.datetime.now()
+        self._interval = datetime.timedelta(microseconds = interval_us)
+    def now(self):
+        self._now += self._interval
+        return self._now
         
 class TestResult(object):
     def __init__(self, run = 0, failed = 0, errors = 0):
@@ -29,7 +38,8 @@ class TestResult(object):
 class TestSnorePlugin(unittest.TestCase):
     def setUp(self):
         self._snarler = TestSnarler()
-        self._plugin = snore.plugin.SnorePlugin(self._snarler)
+        self._plugin = snore.plugin.SnorePlugin(self._snarler, TestClock(0))
+        self._plugin.begin()
         
     def testBeginDoesNotSnarl(self):
         self._snarler.last_message = ''
@@ -91,8 +101,28 @@ class TestSnorePlugin(unittest.TestCase):
         self._plugin.finalize(TestResult(run = 5, failed = 1, errors = 1))
         self.assertEqual('1 of 5 tests had errors.', self._snarler.last_title)
     
-    def testTimeElapsedComputationIsCorrect(self):
-        # TBD: Test that time computation is accurate with injected "clock"?
-        pass
+    def testZeroTimeElapsedComputationIsCorrect(self):
+        self._plugin = snore.plugin.SnorePlugin(self._snarler, TestClock(0))
+        self._plugin.begin()
+        self._plugin.finalize(TestResult(run = 5, failed = 0, errors = 0))
+        self.assertEqual('Tests completed in 0.00 seconds.', self._snarler.last_body)
+        
+    def testTenMsTimeElapsedComputationIsCorrect(self):
+        self._plugin = snore.plugin.SnorePlugin(self._snarler, TestClock(10000))
+        self._plugin.begin()
+        self._plugin.finalize(TestResult(run = 5, failed = 0, errors = 0))
+        self.assertEqual('Tests completed in 0.01 seconds.', self._snarler.last_body)
+        
+    def testTenthSecondTimeElapsedComputationIsCorrect(self):
+        self._plugin = snore.plugin.SnorePlugin(self._snarler, TestClock(100000))
+        self._plugin.begin()
+        self._plugin.finalize(TestResult(run = 5, failed = 0, errors = 0))
+        self.assertEqual('Tests completed in 0.10 seconds.', self._snarler.last_body)
+        
+    def testTwoSecondTimeElapsedComputationIsCorrect(self):
+        self._plugin = snore.plugin.SnorePlugin(self._snarler, TestClock(2000000))
+        self._plugin.begin()
+        self._plugin.finalize(TestResult(run = 5, failed = 0, errors = 0))
+        self.assertEqual('Tests completed in 2.00 seconds.', self._snarler.last_body)
         
     # TBD: Test images passed to snarler    
