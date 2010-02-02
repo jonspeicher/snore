@@ -30,14 +30,25 @@ class SnorePlugin(nose.plugins.Plugin):
         pass
         
     def finalize(self, result):
-        if result.wasSuccessful():
-            if result.testsRun == 1:
-                self._snarler.snarl('All unit tests passed.', '1 test run in 5.678 seconds.')
-            elif result.testsRun == 2:
-                self._snarler.snarl('All unit tests passed.', '2 tests run in 5.678 seconds.')
-            else:
-                self._snarler.snarl('All unit tests passed.', '5 tests run in 5.678 seconds.')
-        elif len(result.errors) > 0:
-            self._snarler.snarl('Some unit tests had errors.', '2 errors in 5.678 seconds.')
+        title = self._get_title_string(result)
+        time = self._make_elapsed_time_string(5.678)
+        
+        if result.errors:
+            count = '2 errors'
+        elif result.failures:
+            count = '3 of 5 tests failed'
         else:
-            self._snarler.snarl('Some unit tests failed.', '3 of 5 tests failed in 5.678 seconds.')
+            count = self._make_test_count_string(result.testsRun)
+            
+        self._snarler.snarl(title, count + time)
+    
+    def _get_title_string(self, result):
+        if result.errors: return 'Some unit tests had errors.'
+        elif result.failures: return 'Some unit tests failed.'
+        else: return 'All unit tests passed.'
+
+    def _make_test_count_string(self, count):
+        return str(count) + (' test' if count == 1 else ' tests')
+        
+    def _make_elapsed_time_string(self, time):
+        return ' run in ' + str(time) + ' seconds.'

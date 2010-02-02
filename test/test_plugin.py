@@ -22,11 +22,9 @@ class TestSnarler(object):
         
 class TestResult(object):
     def __init__(self, num_tests_passed, num_tests_run, num_errors = 0):
-        self._num_tests_passed = num_tests_passed
         self.testsRun = num_tests_run
+        self.failures = num_tests_run - num_tests_passed
         self.errors = num_errors * [None]
-    def wasSuccessful(self):
-        return self.testsRun == self._num_tests_passed
 
 # This is the test case itself.
     
