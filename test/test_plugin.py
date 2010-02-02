@@ -43,8 +43,12 @@ class TestSnorePlugin(unittest.TestCase):
     def testGreenTitleIsAllUnitTestsPassed(self):
         self._plugin.finalize(TestResult(5, 5))
         self.assertEqual('All unit tests passed.', self._snarler.last_title)
+    
+    def testGreenBodyStartsWithTotalTestCountForOneTest(self):
+        self._plugin.finalize(TestResult(1, 1))
+        self.assertTrue(self._snarler.last_body.startswith('1 test run'))
         
-    def testGreenBodyStartsWithTotalTestCount(self):
+    def testGreenBodyStartsWithTotalTestCountForSeveralTests(self):
         self._plugin.finalize(TestResult(5, 5))
         self.assertTrue(self._snarler.last_body.startswith('5 tests run'))
         
@@ -79,5 +83,10 @@ class TestSnorePlugin(unittest.TestCase):
         self._plugin.finalize(TestResult(3, 5, 2))
         self.assertTrue(regex.search(self._snarler.last_body))
     
-    # TBD: Add to body first error or first failure text, or name of first failing test case?
+    # TBD: Maybe add "testOneFailed..." and "testMultipleFailed..." tests to drive correctness
+    # TBD: What does it do with zero tests?
     # TBD: Test that time computation is accurate with injected "clock"?
+    # TBD: Test images passed to snarler
+    # TBD: Add to body first error or first failure text, or name of first failing test case?
+    # TBD: Also add a test case for the plugin using the framework? Ick.
+    
