@@ -82,14 +82,20 @@ class TestSnorePlugin(unittest.TestCase):
     
     def testErrorTitleIsSomeUnitTestsHadErrors(self):
         self._plugin.finalize(TestResult(3, 5, 2))
-        self.assertEqual('Some unit tests had errors.', self._snarler.last_title)
+        self.assertEqual('Some unit tests had errors.', self._snarler.last_title)    
     
-    # TBD: Fill this out for multiple cases
+    def testErrorBodyStartsWithNumberOfErrorsForOneTest(self):
+        self._plugin.finalize(TestResult(0, 1, 1))
+        self.assertTrue(self._snarler.last_body.startswith('1 of 1 test had errors'))
         
-    def testErrorBodyStartsWithNumberOfErrors(self):
-        self._plugin.finalize(TestResult(3, 5, 2))
-        self.assertTrue(self._snarler.last_body.startswith('2 errors'))
-        
+    def testErrorBodyStartsWithNumberOfErrorsForTwoTests(self):
+        self._plugin.finalize(TestResult(0, 2, 2))
+        self.assertTrue(self._snarler.last_body.startswith('2 of 2 tests had errors'))
+
+    def testErrorBodyStartsWithNumberOfErrorsForSeveralTests(self):
+        self._plugin.finalize(TestResult(2, 5, 3))
+        self.assertTrue(self._snarler.last_body.startswith('3 of 5 tests had errors'))
+                
     def testErrorBodyEndsWithTestRunTime(self):
         regex = re.compile(' in \d+\.?\d* seconds.$')
         self._plugin.finalize(TestResult(3, 5, 2))

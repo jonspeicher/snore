@@ -35,7 +35,7 @@ class SnorePlugin(nose.plugins.Plugin):
         time = self._make_elapsed_time_string(5.678)
         
         if result.errors:
-            count = '2 errors'
+            count = str(len(result.errors)) + ' of ' + count + ' had errors'
         elif result.failures:
             count = str(len(result.failures)) + ' of ' + count + ' failed'
         
