@@ -33,6 +33,8 @@ class SnorePlugin(nose.plugins.Plugin):
         if result.wasSuccessful():
             if result.testsRun == 1:
                 self._snarler.snarl('All unit tests passed.', '1 test run in 5.678 seconds.')
+            elif result.testsRun == 2:
+                self._snarler.snarl('All unit tests passed.', '2 tests run in 5.678 seconds.')
             else:
                 self._snarler.snarl('All unit tests passed.', '5 tests run in 5.678 seconds.')
         elif len(result.errors) > 0:

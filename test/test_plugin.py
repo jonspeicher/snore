@@ -47,6 +47,10 @@ class TestSnorePlugin(unittest.TestCase):
     def testGreenBodyStartsWithTotalTestCountForOneTest(self):
         self._plugin.finalize(TestResult(1, 1))
         self.assertTrue(self._snarler.last_body.startswith('1 test run'))
+    
+    def testGreenBodyStartsWithTotalTestCountForTwoTests(self):
+        self._plugin.finalize(TestResult(2, 2))
+        self.assertTrue(self._snarler.last_body.startswith('2 tests run'))
         
     def testGreenBodyStartsWithTotalTestCountForSeveralTests(self):
         self._plugin.finalize(TestResult(5, 5))
