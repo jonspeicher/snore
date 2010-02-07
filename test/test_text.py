@@ -3,9 +3,8 @@
 # Copyright (c) 2010 Jonathan Speicher (jon.speicher@gmail.com)
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
-# NOTE: These tests are intended to be run with nosetests, but they don't work with nosetests when
-# the snore egg is installed in site-packages.  There is currently no way to run the tests directly
-# from the command line by executing the test scripts.
+# NOTE: These tests are intended to be run with nosetests.  There is currently no way to run the 
+# tests directly from the command line by executing the test scripts.
 
 import re
 
