@@ -5,6 +5,7 @@ runner.  It provides notification of test status and results using Snarl when no
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
 import nose.plugins
+from formatter import Formatter
 
 # Many convenient things happen if your plugin class defines a docstring and calls the superclass in
 # a few commonly-overridden methods (__init__, options, configure).  See the nose documentation.
@@ -18,6 +19,7 @@ class SnorePlugin(nose.plugins.Plugin):
     
     def __init__(self, snarler, clock):
         super(SnorePlugin, self).__init__()
+        self._formatter = Formatter()
         self._snarler = snarler
         self._clock = clock
         
@@ -25,23 +27,10 @@ class SnorePlugin(nose.plugins.Plugin):
         self._start_time = self._clock.now()
         
     def finalize(self, result):
-        title = self._get_test_title(result)
-        body = self._elapsed_time(self._clock.now() - self._start_time)
+        counts = self._get_counts(result)
+        title = self._formatter.format_result(*counts)
+        body = self._formatter.format_time(self._clock.now() - self._start_time)
         self._snarler.snarl(title, body)
-
-    def _get_test_title(self, result):
-        if result.errors:
-            return self._test_summary(len(result.errors), result.testsRun, 'had errors.')
-        elif result.failures:
-            return self._test_summary(len(result.failures), result.testsRun, 'failed.')
-        else:
-            return self._test_summary(result.testsRun, result.testsRun, 'passed.')
-            
-    def _test_summary(self, count, total, summary):
-        return str(count) + ' of ' + str(total) + ' test' + ('s ' if total > 1 else ' ') + summary
         
-    def _elapsed_time(self, delta):
-        return 'Tests completed in ' + self._format_delta(delta) + ' seconds.'
-        
-    def _format_delta(self, delta):
-        return '%0.2f' % (delta.seconds + (delta.microseconds * 0.000001))
+    def _get_counts(self, result):
+        return (result.testsRun, len(result.failures), len(result.errors))
