@@ -35,7 +35,10 @@ class SnorePlugin(nose.plugins.Plugin):
         counts = self._get_counts(result)
         title = self._formatter.format_result(*counts)
         body = self._formatter.format_time(self._clock.now() - self._start_time)
-        self._snarler.snarl(title, body, 'pass.png')
+        if title.find('passed') != -1:
+            self._snarler.snarl(title, body, 'pass.png')
+        else:
+            self._snarler.snarl(title, body, 'fail.png')
         
     def _get_counts(self, result):
         return (result.testsRun, len(result.failures), len(result.errors))
