@@ -14,3 +14,7 @@ class TestSnorePluginIconOutput(SnorePluginTestCase):
     def testRedIconIsFailDotPng(self):
         self._plugin.finalize(TestResult(run = 1, failed = 1, errors = 0))
         self.assertTrue(self._snarler.last_icon.endswith('fail.png'))
+        
+    def testErrorIconIsErrorDotPng(self):
+        self._plugin.finalize(TestResult(run = 1, failed = 0, errors = 1))
+        self.assertTrue(self._snarler.last_icon.endswith('error.png'))
