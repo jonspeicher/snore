@@ -3,9 +3,6 @@
 # Copyright (c) 2010 Jonathan Speicher (jon.speicher@gmail.com)
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
-# NOTE: These tests are intended to be run with nosetests.  There is currently no way to run the 
-# tests directly from the command line by executing the test scripts.
-
 from util import SnorePluginTest
 from util import TestResult    
 

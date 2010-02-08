@@ -21,7 +21,7 @@ I've tested snore with Python 2.5, Snarl 2.21, PySnarl 1.0.2, and nose 0.11.1 on
 Installation
 ------------
 
-First, install the required dependencies.  Snarl must be installed according to the instructions found at its website.  Once setuptools is installed, nose can be retrieved and installed by running `easy_install nose` at a shell prompt.  To install PySnarl, download and unzip the source and run `setup.py install` from the unzipped source's root directory.
+First, install the required dependencies.  Snarl must be installed according to the instructions found at its website.  Once `setuptools` is installed, nose can be retrieved and installed by running `easy_install nose` at a shell prompt.  To install PySnarl, download and unzip the source and run `setup.py install` from the unzipped source's root directory.
 
 TBD: installing snore (python setup.py install --root=test, python setup.py install?  Or if it winds up on the PyPI, make that into build instructions?)
 
@@ -33,7 +33,7 @@ TBD: running (nosetests --with-snore), changing pngs?
 Tests
 -----
 
-Unit tests are provided with the source distribution in the `test` directory.  These tests are intended to be run with `nosetests`.  There is currently no way to run the tests directly from the command line by executing the test scripts.
+Unit tests are provided with the source distribution in the `test` directory.  These tests are intended to be run with `nosetests`.  There is currently no way to run the tests directly from the command line by executing the test scripts.  The tests should work whether or not the package has been installed.
 
 Uninstallation
 --------------
