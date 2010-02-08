@@ -11,9 +11,10 @@ from snore.plugin import SnorePlugin
 # Define a few test doubles.
 
 class TestSnarler(object):
-    def snarl(self, title, body):
+    def snarl(self, title, body, icon = ''):
         self.last_title = title
         self.last_body = body
+        self.last_icon = icon
         
 class TestClock(object):
     def __init__(self):
