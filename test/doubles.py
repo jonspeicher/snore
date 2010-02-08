@@ -1,14 +1,9 @@
-"""This module contains utilities and classes used by the unit tests for the SnorePlugin class."""
+"""This module contains test doubles used by the unit tests for the SnorePlugin class."""
 
 # Copyright (c) 2010 Jonathan Speicher (jon.speicher@gmail.com)
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
 import datetime
-import unittest
-
-from snore.plugin import SnorePlugin
-
-# Define a few test doubles.
 
 class TestSnarler(object):
     def snarl(self, title, body, icon = ''):
@@ -32,12 +27,3 @@ class TestResult(object):
         self.testsRun = run
         self.failures = failed * [None]
         self.errors = errors * [None]
-
-# Define a base for all plugin test cases.
-
-class SnorePluginTest(unittest.TestCase):
-    def setUp(self):
-        self._snarler = TestSnarler()
-        self._clock = TestClock()
-        self._plugin = SnorePlugin(self._snarler, self._clock)
-        self._plugin.begin()  

@@ -5,10 +5,10 @@
 
 import re
 
-from util import SnorePluginTest
-from util import TestResult
+from case import SnorePluginTestCase
+from doubles import TestResult
 
-class TestSnorePluginTextContent(SnorePluginTest):
+class TestSnorePluginTextContent(SnorePluginTestCase):
     def testBeginDoesNotSnarl(self):
         self._snarler.last_message = ''
         self._plugin.begin()

@@ -3,10 +3,10 @@
 # Copyright (c) 2010 Jonathan Speicher (jon.speicher@gmail.com)
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
-from util import SnorePluginTest
-from util import TestResult    
+from case import SnorePluginTestCase
+from doubles import TestResult    
 
-class TestSnorePluginElapsedTimeAccuracy(SnorePluginTest):
+class TestSnorePluginElapsedTimeAccuracy(SnorePluginTestCase):
     def testZeroTimeElapsedComputationIsCorrect(self):
         self._clock.interval_ms = 0
         self._plugin.finalize(TestResult())
