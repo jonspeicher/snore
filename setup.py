@@ -21,5 +21,6 @@ setup(
     license = 'MIT',
     install_requires = ['nose>=0.11.1'],
     packages = ['snore'],
+    package_data = { 'snore': ['icons/*.png'] },
     entry_points = { 'nose.plugins': ['snore = snore.builder:build'] }
     )

@@ -54,6 +54,8 @@ Credits
 
 snore is pretty dumb.  For the most part, it simply ties together existing software, and so credit is due to the authors of Snarl, PySnarl, and nose.  Additionally, I spent a good chunk of time studying [NoseGrowl](http://www.assembla.com/wiki/show/nosegrowl) as an example.
 
+The [pass](http://commons.wikimedia.org/wiki/File:Support-filled.svg) and [fail](http://commons.wikimedia.org/wiki/File:Oppose-filled.svg) icons are public domain and were made by Wikimedia Commons user [Kalan](http://commons.wikimedia.org/wiki/User:Kalan).
+
 License
 -------
 
