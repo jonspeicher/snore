@@ -42,7 +42,7 @@ class SnorePlugin(nose.plugins.Plugin):
         elif title.find('failed') != -1:
             self._snarler.snarl(title, body, pkg_resources.resource_filename('snore', 'icons/fail.png'))
         else:
-            self._snarler.snarl(title, body, 'error.png')
+            self._snarler.snarl(title, body, pkg_resources.resource_filename('snore', 'icons/error.png'))
         
     def _get_counts(self, result):
         return (result.testsRun, len(result.failures), len(result.errors))

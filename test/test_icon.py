@@ -33,3 +33,7 @@ class TestSnorePluginIconOutput(SnorePluginTestCase):
         self._plugin.finalize(TestResult(run = 1, failed = 0, errors = 1))
         self.assertTrue(self._snarler.last_icon.endswith('error.png'))
         
+    def testErrorIconHasPackagePath(self):
+        self._plugin.finalize(TestResult(run = 1, failed = 0, errors = 1))
+        self.assertTrue(self._snarler.last_icon.startswith(self._package_path))
+        
