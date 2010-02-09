@@ -4,9 +4,8 @@
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
 import doubles
-import unittest
-
 from snore.plugin import SnorePlugin
+import unittest
 
 class SnorePluginTestCase(unittest.TestCase):
     def setUp(self):

@@ -3,10 +3,9 @@
 # Copyright (c) 2010 Jonathan Speicher (jon.speicher@gmail.com)
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
-import re
-
 from case import SnorePluginTestCase
 from doubles import TestResult
+import re
 
 class TestSnorePluginTextContent(SnorePluginTestCase):
     def testBeginDoesNotSnarl(self):

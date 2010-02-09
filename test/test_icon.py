@@ -3,10 +3,9 @@
 # Copyright (c) 2010 Jonathan Speicher (jon.speicher@gmail.com)
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
-import pkg_resources
-
 from case import SnorePluginTestCase
 from doubles import TestResult    
+import pkg_resources
 
 class TestSnorePluginIconOutput(SnorePluginTestCase):
     def setUp(self):

@@ -4,10 +4,9 @@ runner.  It provides notification of test status and results using Snarl when no
 # Copyright (c) 2010 Jonathan Speicher (jon.speicher@gmail.com)
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
+from formatter import Formatter
 import nose.plugins
 import pkg_resources
-
-from formatter import Formatter
 
 # Many convenient things happen if your plugin class defines a docstring and calls the superclass in
 # a few commonly-overridden methods (__init__, options, configure).  See the nose documentation.
