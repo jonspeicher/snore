@@ -7,8 +7,10 @@ from case import SnorePluginTestCase
 from doubles import TestResult
 
 class TestSnorePluginFormatterPrecedence(SnorePluginTestCase):
-    def testErrorsHavePrecedenceOverFailures(self):
+    def testErrorTextHasPrecedenceOverFailureText(self):
         self._plugin.finalize(TestResult(run = 5, failed = 1, errors = 1))
         self.assertEqual('1 of 5 tests had errors.', self._snarler.last_title)
         
-    # TBD: test icon precedence as well as title precedence?
+    def testErrorIconHasPrecedenceOverFailureIcon(self):
+        self._plugin.finalize(TestResult(run = 5, failed = 1, errors = 1))
+        self.assertTrue(self._snarler.last_icon.endswith('error.png'))
