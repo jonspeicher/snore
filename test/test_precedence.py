@@ -10,3 +10,5 @@ class TestSnorePluginFormatterPrecedence(SnorePluginTestCase):
     def testErrorsHavePrecedenceOverFailures(self):
         self._plugin.finalize(TestResult(run = 5, failed = 1, errors = 1))
         self.assertEqual('1 of 5 tests had errors.', self._snarler.last_title)
+        
+    # TBD: test icon precedence as well as title precedence?

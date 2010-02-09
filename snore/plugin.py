@@ -5,6 +5,8 @@ runner.  It provides notification of test status and results using Snarl when no
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
 import nose.plugins
+import pkg_resources
+
 from formatter import Formatter
 
 # Many convenient things happen if your plugin class defines a docstring and calls the superclass in
@@ -36,7 +38,7 @@ class SnorePlugin(nose.plugins.Plugin):
         title = self._formatter.format_result(*counts)
         body = self._formatter.format_time(self._clock.now() - self._start_time)
         if title.find('passed') != -1:
-            self._snarler.snarl(title, body, 'pass.png')
+            self._snarler.snarl(title, body, pkg_resources.resource_filename('snore', 'icons/pass.png'))
         elif title.find('failed') != -1:
             self._snarler.snarl(title, body, 'fail.png')
         else:
