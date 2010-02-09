@@ -40,7 +40,7 @@ class SnorePlugin(nose.plugins.Plugin):
         if title.find('passed') != -1:
             self._snarler.snarl(title, body, pkg_resources.resource_filename('snore', 'icons/pass.png'))
         elif title.find('failed') != -1:
-            self._snarler.snarl(title, body, 'fail.png')
+            self._snarler.snarl(title, body, pkg_resources.resource_filename('snore', 'icons/fail.png'))
         else:
             self._snarler.snarl(title, body, 'error.png')
         
