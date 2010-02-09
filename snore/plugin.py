@@ -14,7 +14,10 @@ import pkg_resources
 # TBD: http://peak.telecommunity.com/DevCenter/PkgResources#resource-extraction
 # Who retrieves the filenames?  The plugin?  Does it give them to the Formatter?  Does the
 # formatter return them?
-# Also clean up temporary files when plugin is destroyed?
+
+# Also clean up temporary files when plugin is destroyed?  Register atexit handler for
+# pkg_resources.cleanup_resources()?  Or set zip flag to false and document in readme how to 
+# override provided icons?
 
 class SnorePlugin(nose.plugins.Plugin):    
     """Enable Snarl notifications"""
@@ -34,14 +37,9 @@ class SnorePlugin(nose.plugins.Plugin):
         
     def finalize(self, result):
         counts = self._get_counts(result)
-        title = self._formatter.format_result(*counts)
+        title, icon = self._formatter.format_result(*counts)
         body = self._formatter.format_time(self._clock.now() - self._start_time)
-        if title.find('passed') != -1:
-            self._snarler.snarl(title, body, pkg_resources.resource_filename('snore', 'icons/pass.png'))
-        elif title.find('failed') != -1:
-            self._snarler.snarl(title, body, pkg_resources.resource_filename('snore', 'icons/fail.png'))
-        else:
-            self._snarler.snarl(title, body, pkg_resources.resource_filename('snore', 'icons/error.png'))
+        self._snarler.snarl(title, body, icon)
         
     def _get_counts(self, result):
         return (result.testsRun, len(result.failures), len(result.errors))
