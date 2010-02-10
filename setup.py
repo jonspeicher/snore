@@ -20,6 +20,7 @@ setup(
     url = "http://github.com/jonspeicher/snore",
     license = 'MIT',
     install_requires = ['nose>=0.11.1'],
+    zip_safe = False,
     packages = ['snore'],
     package_data = { 'snore': ['icons/*.png'] },
     entry_points = { 'nose.plugins': ['snore = snore.builder:build'] }

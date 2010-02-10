@@ -11,10 +11,6 @@ import pkg_resources
 # Many convenient things happen if your plugin class defines a docstring and calls the superclass in
 # a few commonly-overridden methods (__init__, options, configure).  See the nose documentation.
 
-# Also clean up temporary files when plugin is destroyed?  Register atexit handler for
-# pkg_resources.cleanup_resources()?  Or set zip flag to false and document in readme how to 
-# override provided icons?
-
 class SnorePlugin(nose.plugins.Plugin):    
     """Enable Snarl notifications"""
     
