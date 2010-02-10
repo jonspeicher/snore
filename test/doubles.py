@@ -6,12 +6,14 @@
 import datetime
 
 class TestSnarler(object):
+    """Test double for snore's Snarler object"""
     def snarl(self, title, body, icon = ''):
         self.last_title = title
         self.last_body = body
         self.last_icon = icon
         
 class TestClock(object):
+    """Test double for a datetime.datetime object"""
     def __init__(self):
         self._now = datetime.datetime.now()
         self.interval_ms = 0
@@ -23,6 +25,7 @@ class TestClock(object):
     interval_ms = property(None, _set_interval_ms)
         
 class TestResult(object):
+    """Test double for nose's test result object"""
     def __init__(self, run = 0, failed = 0, errors = 0):
         self.testsRun = run
         self.failures = failed * [None]
