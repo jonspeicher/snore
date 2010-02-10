@@ -4,23 +4,19 @@ plugin."""
 # Copyright (c) 2010 Jonathan Speicher (jon.speicher@gmail.com)
 # Licensed under the MIT license: http://creativecommons.org/licenses/MIT
 
-import pkg_resources
-
 class Formatter(object):
     """Format test results for display"""
     
-    def __init__(self):
-        self._pass_icon = pkg_resources.resource_filename('snore', 'icons/pass.png')
-        self._fail_icon = pkg_resources.resource_filename('snore', 'icons/fail.png')
-        self._error_icon = pkg_resources.resource_filename('snore', 'icons/error.png')
+    def __init__(self, icon_path):
+        self._icon_path = icon_path
         
     def format_result(self, run, failed, errors):
         if errors:
-            return (self._summarize(errors, run, 'had errors.'), self._error_icon)
+            return (self._summarize(errors, run, 'had errors.'), self._icon('error'))
         elif failed:
-            return (self._summarize(failed, run, 'failed.'), self._fail_icon)
+            return (self._summarize(failed, run, 'failed.'), self._icon('fail'))
         else:
-            return (self._summarize(run, run, 'passed.'), self._pass_icon)
+            return (self._summarize(run, run, 'passed.'), self._icon('pass'))
             
     def format_time(self, delta):
         return 'Tests completed in ' + self._format_delta(delta) + ' seconds.'
@@ -30,3 +26,6 @@ class Formatter(object):
             
     def _summarize(self, count, total, summary):
         return str(count) + ' of ' + str(total) + ' test' + ('s ' if total > 1 else ' ') + summary
+        
+    def _icon(self, filename):
+        return self._icon_path + '/' + filename + '.png'

@@ -11,10 +11,6 @@ import pkg_resources
 # Many convenient things happen if your plugin class defines a docstring and calls the superclass in
 # a few commonly-overridden methods (__init__, options, configure).  See the nose documentation.
 
-# TBD: http://peak.telecommunity.com/DevCenter/PkgResources#resource-extraction
-# Who retrieves the filenames?  The plugin?  Does it give them to the Formatter?  Does the
-# formatter return them?
-
 # Also clean up temporary files when plugin is destroyed?  Register atexit handler for
 # pkg_resources.cleanup_resources()?  Or set zip flag to false and document in readme how to 
 # override provided icons?
@@ -28,7 +24,7 @@ class SnorePlugin(nose.plugins.Plugin):
     
     def __init__(self, snarler, clock):
         super(SnorePlugin, self).__init__()
-        self._formatter = Formatter()
+        self._formatter = Formatter(self._get_path('icons'))
         self._snarler = snarler
         self._clock = clock
         
@@ -40,6 +36,9 @@ class SnorePlugin(nose.plugins.Plugin):
         title, icon = self._formatter.format_result(*counts)
         body = self._formatter.format_time(self._clock.now() - self._start_time)
         self._snarler.snarl(title, body, icon)
-        
+    
     def _get_counts(self, result):
         return (result.testsRun, len(result.failures), len(result.errors))
+        
+    def _get_path(self, filename):
+        return pkg_resources.resource_filename('snore', filename)
