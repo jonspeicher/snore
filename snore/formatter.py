@@ -27,4 +27,4 @@ class Formatter(object):
         return str(count) + ' of ' + str(total) + ' test' + ('s ' if total > 1 else ' ') + summary
         
     def _icon(self, filename):
-        return self._icon_path + '/' + filename + '.png'
+        return self._icon_path + filename + '.png'

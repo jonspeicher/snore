@@ -20,7 +20,7 @@ class SnorePlugin(nose.plugins.Plugin):
     
     def __init__(self, snarler, clock):
         super(SnorePlugin, self).__init__()
-        self._formatter = Formatter(self._get_path('icons'))
+        self._formatter = Formatter(self._get_path('icons/'))
         self._snarler = snarler
         self._clock = clock
         
