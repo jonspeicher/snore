@@ -21,14 +21,25 @@ I've tested snore with Python 2.5, Snarl 2.21, PySnarl 1.0.2, and nose 0.11.1 on
 Installation
 ============
 
-First, install the required dependencies.  Snarl must be installed according to the instructions found at its website.  Once `setuptools` is installed, nose can be retrieved and installed by running `easy_install nose` at a shell prompt.  To install PySnarl, download and unzip the source and run `setup.py install` from the unzipped source's root directory.
+First, install the required dependencies.  Snarl must be installed according to the instructions found at its website.  Once `setuptools` is installed, nose can be retrieved and installed by running `easy_install nose` at a shell prompt.  To install PySnarl, download and unzip the source, then run `setup.py install` from the unzipped source's root directory.  Install snore the same way.  The source trees for PySnarl and snore may be deleted after installation.
 
-TBD: installing snore (python setup.py install --root=test, python setup.py install?  Or if it winds up on the PyPI, make that into build instructions?)
+Usage
+=====
 
-TBD: Features, descriptions, etc.
-=================================
+Running Nose with Snore
+-----------------------
 
-TBD: running (nosetests --with-snore)
+To enable Snarl notification of nose's test results via the snore plugin, simply add the `--with-snore` option to your `nosetests` command line.
+
+Configuring Nose to Always Run with Snore
+-----------------------------------------
+
+nose can be configured to always use the snore plugin in two ways:
+
+* Setting the environment variable `NOSE_WITH_SNORE` to 1 
+* Placing `with-snore=1` in the `[nosetests]` section of the `.noserc` or `nose.cfg` file in your home directory
+
+See the [nose usage documentation](http://somethingaboutorange.com/mrl/projects/nose/0.11.1/usage.html) for more info.
 
 Customizing the Icons
 ---------------------
